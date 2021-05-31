@@ -1,0 +1,4 @@
+qutip
+numpy
+cvxpy
+scipy
