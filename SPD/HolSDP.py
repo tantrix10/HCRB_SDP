@@ -81,9 +81,8 @@ def Rmat(S, tol = 1e-8):
 
 
 
-def naghol_spd(rho, drho, phi, gamma, n):
+def naghol_spd(rho, drho, d):
     rho = (rho.dag()+rho)/2
-    d    = 2**n
     npar = 3
  
     D, Vi = np.linalg.eigh(rho.full())
