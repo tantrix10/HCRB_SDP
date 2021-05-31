@@ -1,10 +1,7 @@
 import qutip     as qt
 import numpy     as np
 import cvxpy     as cp
-import itertools as it
 import scipy     as sci
-import numpy.matlib
-import os
 
 
 def rank(D, tol = 1e-9):
