@@ -92,12 +92,7 @@ def naghol_spd(rho, drho, d):
     Vi = Vi[:,::-1]
     D = D[::-1]
     
-    #print("Vi, D before: ","\n",Vi, D)
-
     Vi = qt.Qobj(Vi,dims= [[2]*n,[2]*n])
-
-    #print("check eigs are orthon: ","\n",np.allclose(np.eye(2**n), (Vi*Vi.dag()).full() ))
-    print("check rho = VDV+: ","\n",np.allclose(rho.full(), (Vi*qt.Qobj(np.diag(D),dims= [[2]*n,[2]*n])*Vi.dag()).full()     ))
 
     snonzero, rnk = rank(D)
 
@@ -112,7 +107,6 @@ def naghol_spd(rho, drho, d):
     for i in range(npar):
         drho[i] = (drho[i].dag()+drho[i])/2
         eigdrho = (Vi.dag())*drho[i]*Vi
-        #print(eigdrho)
         eigdrho = eigdrho.full()
         ak = eigdrho[maskKern]
         ak = ak.reshape((rnk,d-rnk)).transpose()
@@ -125,11 +119,8 @@ def naghol_spd(rho, drho, d):
     S   = SmatRank(snonzero,d, rnk, fulldim)
     S   = (S.transpose().conjugate()+S)/2
 
-    #R = sci.linalg.sqrtm(S)
     R = Rmat(S)
     
-    #print("check S = R+ *R: ","\n",np.allclose(R.transpose().conjugate() @ R,S))
-    #print("-------------------------------------")
     effdim = R.shape[0]
     idd = np.diag(np.ndarray.flatten(np.concatenate((np.ones((rnk)),2*np.ones((fulldim-rnk))))))
 
