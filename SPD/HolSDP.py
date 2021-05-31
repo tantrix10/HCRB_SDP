@@ -81,7 +81,7 @@ def Rmat(S, tol = 1e-8):
 
 
 
-def naghol_spd(rho, drho, d):
+def naghol_sdp(rho, drho, d, solve = 'MOSEK', verbose_state = False)):
     rho = (rho.dag()+rho)/2
     npar = 3
  
@@ -95,6 +95,8 @@ def naghol_spd(rho, drho, d):
     Vi = qt.Qobj(Vi,dims= [[2]*n,[2]*n])
 
     snonzero, rnk = rank(D)
+
+    solver_options = {'MOSEK':cp.MOSEK, 'CVXOPT': cp.CVXOPT, 'SCS':cp.SCS }
 
     maskDiag = np.diag(np.ndarray.flatten(np.concatenate((np.ones([rnk,1],dtype = bool),np.zeros([d-rnk,1],dtype = bool)))))
     maskRank = np.concatenate((np.concatenate((np.triu(np.ones(rnk,dtype = bool),1), np.zeros([rnk,d-rnk],dtype = bool)),axis = 1),np.zeros([d-rnk,d],dtype = bool)))
@@ -134,7 +136,7 @@ def naghol_spd(rho, drho, d):
 
     obj = cp.Minimize(cp.trace(V))
     prob = cp.Problem(obj,constraints)
-    prob.solve(solver = cp.SCS)#, verbose = True)
+    prob.solve(solver = solver_options.get(solve, cp.SCS), verbose = verbose_state)
     out = prob.value
     return out
 
