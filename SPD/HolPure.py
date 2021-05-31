@@ -63,7 +63,7 @@ def naghol_spd(phi, dphi, d, solve = 'MOSEK', verbose_state = False):
     #define problem
     prob = cp.Problem(obj,constraints)
 
-   #solve problem
+    #solve problem
     prob.solve(solver = solver_options[solve], verbose = verbose_state)
     
     #extract and return value
