@@ -101,10 +101,6 @@ def naghol_spd(rho, drho, phi, gamma, n):
     print("check rho = VDV+: ","\n",np.allclose(rho.full(), (Vi*qt.Qobj(np.diag(D),dims= [[2]*n,[2]*n])*Vi.dag()).full()     ))
 
     snonzero, rnk = rank(D)
-    #snonzero, rnk = D, 2**n
-    print(D)
-    #print("differnce between snonzero and eig: ","\n",snonzero,np.isclose(1,sum(snonzero)), D, sum(D))
-    #print("check sum snonzero = 1: ","\n", np.isclose(1,sum(snonzero)))
 
     maskDiag = np.diag(np.ndarray.flatten(np.concatenate((np.ones([rnk,1],dtype = bool),np.zeros([d-rnk,1],dtype = bool)))))
     maskRank = np.concatenate((np.concatenate((np.triu(np.ones(rnk,dtype = bool),1), np.zeros([rnk,d-rnk],dtype = bool)),axis = 1),np.zeros([d-rnk,d],dtype = bool)))
