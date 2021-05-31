@@ -3,7 +3,7 @@ import numpy     as np
 import cvxpy     as cp
 
 
-def naghol_spd(phi, dphi, d, solve = 'MOSEK', verbose_state = False):
+def naghol_sdp(phi, dphi, d, solve = 'MOSEK', verbose_state = False):
     """
     args:
     -phi : qutip quantum object, pure normalised state, of size (d, 1)
